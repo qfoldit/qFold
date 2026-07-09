@@ -1,6 +1,6 @@
 <div align="center">    
  
-# QFold     
+# QFold Docker Image   
 
 [![arXiv](http://img.shields.io/badge/arXiv-2101.10279-B31B1B.svg)](https://arxiv.org/pdf/2101.10279.pdf)
 [![Journal](http://img.shields.io/badge/Quantum_Science_and_Technology-2022-4b44ce.svg)](https://iopscience.iop.org/journal/2058-9565)
