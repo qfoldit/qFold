@@ -40,11 +40,4 @@ RUN pip install \
     torch
 
 
-CMD [
- "conda",
- "run",
- "-n",
- "qfold",
- "python",
- "server.py"
-]
+CMD ["conda", "run", "-n", "qfold", "python", "server.py"]
