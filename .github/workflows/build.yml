@@ -1,56 +1,38 @@
-name: Build and Publish qFold MCP
-
+name: Docker Test
 
 on:
   push:
     branches:
       - main
 
-
 permissions:
   contents: read
   packages: write
 
-
 jobs:
 
-  docker:
+  build:
 
-    runs-on:
-      ubuntu-latest
-
+    runs-on: ubuntu-latest
 
     steps:
 
-
-    - name: Checkout
-      uses: actions/checkout@v4
-
+      - name: Checkout
+        uses: actions/checkout@v4
 
 
-    - name: Login GHCR
-      uses: docker/login-action@v3
-
-      with:
-
-        registry: ghcr.io
-
-        username: ${{ github.actor }}
-
-        password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
 
-
-    - name: Build and Push
-
-      uses: docker/build-push-action@v6
-
-      with:
-
-        context: .
-
-        push: true
-
-        tags:
-
-          ghcr.io/qfoldit/qfold:latest
+      - name: Build and Push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/qfoldit/qfold:latest
