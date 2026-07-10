@@ -1,25 +1,13 @@
 FROM continuumio/miniconda3:latest
 
 
-LABEL org.opencontainers.image.title="qFold MCP"
-LABEL org.opencontainers.image.description="Quantum Protein Folding MCP Server"
-LABEL org.opencontainers.image.source="https://github.com/qfoldit/qFold-MCP"
-
-
 WORKDIR /app
 
 
-RUN apt-get update && apt-get install -y \
-    libxrender1 \
-    libxext6 \
-    build-essential \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+COPY . .
 
 
-COPY . /app
-
-
+# Quantum chemistry environment
 RUN conda create \
     -n qfold \
     -c psi4 \
@@ -28,7 +16,14 @@ RUN conda create \
     -y
 
 
-SHELL ["conda", "run", "-n", "qfold", "/bin/bash", "-c"]
+# MCP environment
+RUN conda create \
+    -n mcp \
+    python=3.11 \
+    -y
+
+
+SHELL ["conda", "run", "-n", "mcp", "/bin/bash", "-c"]
 
 
 RUN pip install \
@@ -36,8 +31,7 @@ RUN pip install \
     amazon-braket-sdk \
     boto3 \
     numpy \
-    scipy \
-    torch
+    scipy
 
 
-CMD ["conda", "run", "-n", "qfold", "python", "server.py"]
+CMD ["conda", "run", "-n", "mcp", "python", "server.py"]
